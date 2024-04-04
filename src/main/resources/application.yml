@@ -3,9 +3,9 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:mysql://localhost:3308/kukerton
-    username: root
-    password: mmsc532mm
+    url: jdbc:mysql://${MYSQL_HOST}:3308/${MYSQL_DATABASE}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
