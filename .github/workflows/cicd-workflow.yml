@@ -57,22 +57,16 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kukerton:latest
 
-      - name: Get current time
-        uses: josStorer/get-current-time@v2
-        id: current-time
+      - name: 배포
+        uses: appleboy/ssh-action@master
         with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
-
-      - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v21
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.APPLICATION_NAME }}
-          environment_name: ${{ secrets.ENVIRONMENT_NAME }}
-          version_label: kukerton-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2
-          deployment_package: docker-compose.yml
-          wait_for_environment_recovery: 60
-
+          host: ${{ secrets.EC2_SERVER_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker stop $(docker ps -a -q) 
+            docker rm -f $(docker ps -qa)
+            docker pull ${{ secrets.DOCKER_USERNAME }}/bookdiary
+            docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/kukerton:latest
+            docker image prune -f
