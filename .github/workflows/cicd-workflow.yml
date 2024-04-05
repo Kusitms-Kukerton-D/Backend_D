@@ -67,6 +67,6 @@ jobs:
           script: |
             docker stop $(docker ps -a -q) 
             docker rm -f $(docker ps -qa)
-            docker pull ${{ secrets.DOCKER_USERNAME }}/bookdiary
+            docker pull ${{ secrets.DOCKER_USERNAME }}/kukerton:latest
             docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/kukerton:latest
             docker image prune -f
