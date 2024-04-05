@@ -29,6 +29,9 @@ jobs:
       # gradle 설정
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3.1.0
+      # ./gradlew 권한 부여
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       # 테스트 없이 빌드
       - name: Build with Gradle
         run: ./gradlew build -x test
@@ -45,7 +48,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-           context: .
-           file: Dockerfile
-           push: true
-           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kukerton:latest
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kukerton:latest
