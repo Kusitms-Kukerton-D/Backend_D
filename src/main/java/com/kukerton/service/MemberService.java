@@ -1,13 +1,18 @@
 package com.kukerton.service;
 
 
+import com.kukerton.domain.entity.Coupon;
 import com.kukerton.domain.entity.Member;
+import com.kukerton.domain.repository.CouponRepository;
 import com.kukerton.domain.repository.MemberRepository;
 import com.kukerton.dto.request.CertificationRequestDto;
+import com.kukerton.dto.response.CouponResponseDto;
 import com.kukerton.dto.response.KakaoAccessToken;
 import com.kukerton.dto.response.KakaoUserInfo;
 import com.kukerton.global.enums.MemberErrorCode;
 import com.kukerton.global.exception.MemberException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +34,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     private final ImageService imageService;
+
+    private final CouponRepository couponRepository;
 
 
     private final String clientId = "5cd984f686b2785bcc5e6f25ecbbc27d";
@@ -116,6 +123,21 @@ public class MemberService {
 
         return memberRepository.findByAuthId(authId);
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<CouponResponseDto> getCoupon(Long memberId) {
+
+        List<CouponResponseDto> response = new ArrayList<>();
+
+        List<Coupon> getcoupons = couponRepository.getcoupons(memberId, LocalDate.now());
+
+        if(!getcoupons.isEmpty()){
+            getcoupons.forEach(coupon -> {
+                response.add(CouponResponseDto.fromEntity(coupon));
+            });
+        }
+        return response;
     }
 
 

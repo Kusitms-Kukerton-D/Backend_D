@@ -54,4 +54,14 @@ public class CertificationService {
 
         return response;
     }
+
+    @Transactional(readOnly = true)
+    public CertificationResponseDto getCertification(Long certificationId) {
+
+        Certification certification = certificationRepository.findById(certificationId)
+            .orElseThrow(() -> new CertificationException(CertificationErrorCode.NOT_FOUND));
+
+        return CertificationResponseDto.fromEntity(certification);
+    }
+
 }
