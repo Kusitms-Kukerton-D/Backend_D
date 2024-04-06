@@ -22,6 +22,8 @@ public class Certification {
 
     private String img_url;
 
+    private String content;
+
     private String taskTitle;    // task에서 certification 변환 시 입력되는 제목
 
     private String userTitle;    // 인증글 생성 시 유저가 입력하는 제목

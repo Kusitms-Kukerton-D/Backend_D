@@ -12,11 +12,11 @@ INSERT INTO task(id,content,category,title,hour,minute) values (8,'게임2','게
 
 INSERT INTO store(id,name,category,is_opened,end_time,task_id) values (1,'더 클라임 서울','운동',true,'22:00',1);
 
-INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,member_id)
-values (1, null, 'task-title1', null, null, '2024-12-12', false, 1);
+INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,member_id,content)
+values (1, null, 'task-title1', null, null, '2024-12-12', false, 1,'운동');
 
-INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,member_id)
-values (2, null, 'task-title2', null, null, '2024-12-12', false, 1);
+INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,member_id,content)
+values (2, null, 'task-title2', null, null, '2024-12-12', false, 1,'수영');
 
 INSERT INTO coupon (id, content, end_date, member_id, store_id)
 values (1, 'coupon1', '2024-12-01', 1, 1);
