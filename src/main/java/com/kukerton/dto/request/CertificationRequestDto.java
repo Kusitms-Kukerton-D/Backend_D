@@ -7,14 +7,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 public record CertificationRequestDto(
 
-    @NotNull(message = "id는 필수입니다.")
-    Long id,
+    @NotNull(message = "certification id는 필수입니다.")
+    Long certificationId,
     @NotNull(message = "title은 필수입니다.")
     String title,
     @NotNull(message = "review는 필수입니다.")
     String review,
     @Nullable
-    List<MultipartFile> imgUrl
+    String imageUrl
 ) {
 
 }
