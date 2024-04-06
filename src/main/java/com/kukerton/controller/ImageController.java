@@ -7,6 +7,7 @@ import com.kukerton.service.ImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,8 @@ public class ImageController {
         @RequestPart List<MultipartFile> images) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(new BfResponse<>(GlobalSuccessCode.CREATE, imageService.uploadImage(images)));
+            .body(new BfResponse<>(GlobalSuccessCode.CREATE,
+                Map.of("image_url", imageService.uploadImage(images))));
     }
 
 }

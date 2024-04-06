@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,16 @@ public class MemberController {
             .body(new BfResponse<>(GlobalSuccessCode.LOGIN,
                 Map.of("id", memberService.getUserInfoFromResourceServer(code))));
     }
+
+
+    @Operation(summary = "쿠폰 목록 조회 API", description = "회원 프로필에서 쿠폰 목록 조회 api입니다.")
+    @GetMapping("/{memberId}")
+    public ResponseEntity<BfResponse<?>> getCoupon(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(new BfResponse<>(GlobalSuccessCode.SUCCESS,
+                memberService.getCoupon(memberId)));
+    }
+
 
     @Operation(summary = "온보딩 화면 API", description = "온보딩 화면에서 관심분야, 자제분야를 저장하는 API 입니다.")
     @PostMapping("/onboarding")
