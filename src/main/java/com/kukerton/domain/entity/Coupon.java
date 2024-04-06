@@ -20,6 +20,8 @@ public class Coupon {
 
     private String content;  // 할인 내용
 
+    private Integer price;
+
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate endDate;  // 쿠폰 유효 기간
 

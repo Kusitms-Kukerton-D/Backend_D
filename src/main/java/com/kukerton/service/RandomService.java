@@ -1,16 +1,21 @@
 package com.kukerton.service;
 
 import com.kukerton.domain.entity.Config;
+import com.kukerton.domain.entity.Store;
 import com.kukerton.domain.entity.Task;
 import com.kukerton.domain.repository.ConfigRepository;
+import com.kukerton.domain.repository.CouponRepository;
+import com.kukerton.domain.repository.StoreRepository;
 import com.kukerton.domain.repository.TaskRepository;
 import com.kukerton.dto.request.RandomRequest;
+import com.kukerton.global.response.StoreResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,6 +24,8 @@ public class RandomService {
 
     private final ConfigRepository configRepository;
     private final TaskRepository taskRepository;
+    private final StoreRepository storeRepository;
+    private final CouponRepository couponRepository;
     public String getRandomTask(RandomRequest randomRequest) {
 
         String isInterested = randomRequest.getCategory();
@@ -42,6 +49,20 @@ public class RandomService {
         Random rnd = new Random();
         rnd.setSeed(System.currentTimeMillis());
         return newTaskList.get(rnd.nextInt(newTaskList.size())).getContent();
+
+    }
+
+    public List<StoreResponse> getStore() {
+        List<Store> storeList = storeRepository.findAll();
+
+        return storeList.stream()
+                        .map(store -> StoreResponse.builder()
+                        .store_name(store.getName())
+                        .category(store.getCategory())
+                        .is_opened(store.getIs_opened())
+                        .end_time(store.getEnd_time())
+                        .discount(couponRepository.findByStoreId(store.getId())==null ? null : couponRepository.findByStoreId(store.getId()).getPrice())
+                                .build()).toList();
 
     }
 }
