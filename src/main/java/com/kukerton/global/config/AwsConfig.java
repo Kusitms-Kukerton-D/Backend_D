@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsConfig {
 
-
     private final String accessKey="AKIAW3MEDNH2YLXQ2JTU";
 
 

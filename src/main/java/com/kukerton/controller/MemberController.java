@@ -1,8 +1,10 @@
 package com.kukerton.controller;
 
+import com.kukerton.dto.request.CertificationRequestDto;
 import com.kukerton.global.enums.GlobalSuccessCode;
 import com.kukerton.global.response.BfResponse;
 import com.kukerton.service.MemberService;
+import jakarta.validation.Valid;
 import java.util.Map;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +29,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @Operation(summary = "카카오 로그인 API", description = "카카오 로그인을 위한 api 입니다.")
-    @GetMapping ("/login")
+    @GetMapping("/login")
     public ResponseEntity<BfResponse<?>> login(@RequestParam(name = "code") String code) {
         return ResponseEntity.status(HttpStatus.OK)
             .body(new BfResponse<>(GlobalSuccessCode.LOGIN,

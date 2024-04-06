@@ -3,10 +3,12 @@ package com.kukerton.service;
 
 import com.kukerton.domain.Member;
 import com.kukerton.domain.repository.MemberRepository;
+import com.kukerton.dto.request.CertificationRequestDto;
 import com.kukerton.dto.response.KakaoAccessToken;
 import com.kukerton.dto.response.KakaoUserInfo;
 import com.kukerton.global.enums.MemberErrorCode;
 import com.kukerton.global.exception.MemberException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+    private final ImageService imageService;
 
 
     private final String clientId = "5cd984f686b2785bcc5e6f25ecbbc27d";
