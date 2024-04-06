@@ -1,9 +1,8 @@
 package com.kukerton.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kukerton.domain.Member;
+import com.kukerton.domain.entity.Member;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 
 
 public record KakaoUserInfo(

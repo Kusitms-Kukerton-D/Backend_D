@@ -1,6 +1,6 @@
 package com.kukerton.domain.repository;
 
-import com.kukerton.domain.Member;
+import com.kukerton.domain.entity.Member;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
