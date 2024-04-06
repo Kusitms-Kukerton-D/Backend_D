@@ -1,11 +1,15 @@
 package com.kukerton.service;
 
 
+import com.kukerton.domain.entity.Config;
 import com.kukerton.domain.entity.Member;
+import com.kukerton.domain.repository.ConfigRepository;
 import com.kukerton.domain.repository.MemberRepository;
 import com.kukerton.dto.request.CertificationRequestDto;
+import com.kukerton.dto.request.OnboardingRequest;
 import com.kukerton.dto.response.KakaoAccessToken;
 import com.kukerton.dto.response.KakaoUserInfo;
+import com.kukerton.global.enums.Category;
 import com.kukerton.global.enums.MemberErrorCode;
 import com.kukerton.global.exception.MemberException;
 import java.util.List;
@@ -27,6 +31,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final ConfigRepository configRepository;
 
     private final ImageService imageService;
 
@@ -119,4 +124,26 @@ public class MemberService {
     }
 
 
+    public void createOnboardingConfig(OnboardingRequest onboardingRequest) {
+
+        Optional<Member> member = memberRepository.findById(onboardingRequest.getUser_id());
+
+        for(String category : onboardingRequest.getInterested_categories()){
+            configRepository.save(Config.builder()
+                    .category(Category.fromRequest(category).getCategory())
+                    .is_want(true)
+                    .member(member.orElse(null))
+                    .build()
+            );
+        }
+
+        for(String category : onboardingRequest.getRestrained_categories()){
+            configRepository.save(Config.builder()
+                    .category(Category.fromRequest(category).getCategory())
+                    .is_want(false)
+                    .member(member.orElse(null))
+                    .build()
+            );
+        }
+    }
 }
