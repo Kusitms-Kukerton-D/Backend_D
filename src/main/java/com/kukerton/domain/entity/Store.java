@@ -20,9 +20,9 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String name;  //가게 이름
 
-    private String category;
+    private String category;  //
 
     private Double latitude;
 
