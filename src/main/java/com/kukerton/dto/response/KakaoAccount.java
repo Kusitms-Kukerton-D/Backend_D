@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
 public record KakaoAccount(
-    @JsonProperty("nick_name")
+    @JsonProperty("name")
     @NotNull(message = "이름은 필수입니다.")
     String name,
 

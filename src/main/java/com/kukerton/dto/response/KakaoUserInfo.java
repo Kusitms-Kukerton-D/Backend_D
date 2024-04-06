@@ -17,7 +17,7 @@ public record KakaoUserInfo(
 
     public Member toEntity(KakaoUserInfo userInfo) {
         return Member.builder()
-            .name(userInfo.kakaoAccount.name())
+            .nickname(userInfo.kakaoAccount.profile().nickname())
             .authId(userInfo.authId)
             .build();
     }

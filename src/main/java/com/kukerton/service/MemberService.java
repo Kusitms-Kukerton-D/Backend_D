@@ -9,6 +9,7 @@ import com.kukerton.global.enums.MemberErrorCode;
 import com.kukerton.global.exception.MemberException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MemberService {
 
