@@ -5,8 +5,11 @@ import com.kukerton.domain.repository.CertificationRepository;
 import com.kukerton.domain.repository.MemberRepository;
 import com.kukerton.dto.request.CertificationRequestDto;
 import com.kukerton.dto.response.CertificationResponseDto;
+import com.kukerton.dto.response.UnClearCertificationResponseDto;
 import com.kukerton.global.enums.CertificationErrorCode;
 import com.kukerton.global.exception.CertificationException;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,4 +34,24 @@ public class CertificationService {
 
     }
 
+    @Transactional(readOnly = true)
+    public List<UnClearCertificationResponseDto> getUnclearCertification(Long memberId) {
+
+        List<UnClearCertificationResponseDto> response = new ArrayList<>();
+
+        List<Certification> unClearedCertifications = memberRepository.getUnClearedCertification(
+            memberId);
+
+        if (!unClearedCertifications.isEmpty()) {
+
+            unClearedCertifications.forEach(certification -> {
+                response.add(UnClearCertificationResponseDto.builder()
+                    .taskTitle(certification.getTaskTitle())
+                    .certificationId(certification.getId())
+                    .build());
+            });
+        }
+
+        return response;
+    }
 }
