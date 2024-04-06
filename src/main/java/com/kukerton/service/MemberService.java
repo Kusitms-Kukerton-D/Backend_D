@@ -159,7 +159,7 @@ public class MemberService {
         for (String category : onboardingRequest.getInterested_categories()) {
             configRepository.save(Config.builder()
                 .category(Category.fromRequest(category).getCategory())
-                .is_want(true)
+                .isWant(true)
                 .member(member.orElse(null))
                 .build()
             );
@@ -168,7 +168,7 @@ public class MemberService {
         for (String category : onboardingRequest.getRestrained_categories()) {
             configRepository.save(Config.builder()
                 .category(Category.fromRequest(category).getCategory())
-                .is_want(false)
+                .isWant(false)
                 .member(member.orElse(null))
                 .build()
             );
