@@ -23,4 +23,10 @@ public class Task {
 
     private String  category;
 
+    private String title;
+
+    private Integer hour;
+
+    private Integer minute;
+
 }

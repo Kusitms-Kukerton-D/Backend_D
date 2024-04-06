@@ -18,7 +18,7 @@ public class Config {
 
     private String category;
 
-    private Boolean is_want;
+    private Boolean isWant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
