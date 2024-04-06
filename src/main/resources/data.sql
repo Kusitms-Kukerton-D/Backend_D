@@ -10,18 +10,16 @@ INSERT INTO task(id,content,category,title,hour,minute) values (6,'배달음식2
 INSERT INTO task(id,content,category,title,hour,minute) values (7,'게임1','게임','게임쓰','0','30');
 INSERT INTO task(id,content,category,title,hour,minute) values (8,'게임2','게임','게임쓰','1','0');
 
-INSERT INTO store(id,name,category,is_opened,end_time,task_id) values (1,'더 클라임 서울','운동',true,'22:00');
+INSERT INTO store(id,name,category,is_opened,end_time,task_id) values (1,'더 클라임 서울','운동',true,'22:00',1);
 
-INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,
-                          member_id)
+INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,member_id)
 values (1, null, 'task-title1', null, null, '2024-12-12', false, 1);
 
-INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,
-                          member_id)
+INSERT INTO certification(id, img_url, task_title, user_title, review, local_date, is_cleared,member_id)
 values (2, null, 'task-title2', null, null, '2024-12-12', false, 1);
 
 INSERT INTO coupon (id, content, end_date, member_id, store_id)
-values (1, 'coupon1', '2024-12-01', 1, null);
+values (1, 'coupon1', '2024-12-01', 1, 1);
 
 INSERT INTO coupon (id, content, end_date, member_id, store_id)
-values (2, 'coupon2', '2023-12-01', 1, null);
+values (2, 'coupon2', '2023-12-01', 1, 1);
