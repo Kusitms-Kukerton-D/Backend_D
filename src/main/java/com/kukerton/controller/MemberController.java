@@ -27,7 +27,7 @@ public class MemberController {
     @GetMapping ("/login")
     public ResponseEntity<BfResponse<?>> login(@RequestParam(name = "code") String code) {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(new BfResponse<>(GlobalSuccessCode.CREATE,
+            .body(new BfResponse<>(GlobalSuccessCode.LOGIN,
                 Map.of("id", memberService.getUserInfoFromResourceServer(code))));
     }
 
