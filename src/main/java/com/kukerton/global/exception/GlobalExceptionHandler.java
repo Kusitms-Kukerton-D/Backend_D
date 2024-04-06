@@ -2,6 +2,7 @@ package com.kukerton.global.exception;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.INTERNAL_SERVER_ERROR;
 
+import com.kukerton.global.enums.CertificationErrorCode;
 import com.kukerton.global.enums.MemberErrorCode;
 import com.kukerton.global.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,13 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleMemberException(MemberException ex) {
         log.warn(">>>>> MemberException : {}", ex);
         MemberErrorCode errorCode = ex.getErrorCode();
+        return ResponseEntity.status(errorCode.getStatus()).body(errorCode.getErrorResponse());
+    }
+
+    @ExceptionHandler(CertificationException.class)
+    protected ResponseEntity<ErrorResponse> handleCertifitcaionException(CertificationException ex){
+        log.warn(">>>>> CertificationException : {}", ex);
+        CertificationErrorCode errorCode = ex.getErrorCode();
         return ResponseEntity.status(errorCode.getStatus()).body(errorCode.getErrorResponse());
     }
 

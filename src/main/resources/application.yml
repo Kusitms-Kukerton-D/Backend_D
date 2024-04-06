@@ -8,14 +8,19 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
 
   servlet:
     multipart:
       max-file-size: 10MB
+
+  sql:
+    init:
+      mode: always
 
 cloud:
   aws:
