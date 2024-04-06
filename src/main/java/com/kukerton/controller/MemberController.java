@@ -58,16 +58,25 @@ public class MemberController {
 
     @Operation(summary = "온보딩 화면 API", description = "온보딩 화면에서 관심분야, 자제분야를 저장하는 API 입니다.")
     @PostMapping("/onboarding")
-    public ResponseEntity<BfResponse<?>> onboarding(@Validated @RequestBody OnboardingRequest onboardingRequest, BindingResult bindingResult){
+    public ResponseEntity<BfResponse<?>> onboarding(
+        @Validated @RequestBody OnboardingRequest onboardingRequest, BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new OnboardingException(ONBOARDING_INPUT_FORMAT);
         }
 
         memberService.createOnboardingConfig(onboardingRequest);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new BfResponse<>(GlobalSuccessCode.CREATE));
+            .body(new BfResponse<>(GlobalSuccessCode.CREATE));
     }
+
+    @Operation(summary = "회원 프로필 API", description = "회원 프로필 조회 API")
+    @GetMapping("/profile/{memberId}")
+    public ResponseEntity<BfResponse<?>> getprofile(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(new BfResponse<>(GlobalSuccessCode.SUCCESS, memberService.getProfile(memberId)));
+    }
+
 
 }

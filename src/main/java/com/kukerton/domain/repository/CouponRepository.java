@@ -10,7 +10,11 @@ import org.springframework.data.repository.query.Param;
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
     @Query("select c from Coupon c where c.member.id = :memberId and c.endDate >= :endDate")
-    List<Coupon> getcoupons(@Param("memberId") Long memberId, @Param("endDate")LocalDate localDate);
+    List<Coupon> getcoupons(@Param("memberId") Long memberId,
+        @Param("endDate") LocalDate localDate);
+
+    @Query("select count(c) from Coupon c where c.member.id = :memberId")
+    Integer getCouponCount(@Param("memberId") Long memberId);
 
     Coupon findByStoreId(Long store_id);
 }
