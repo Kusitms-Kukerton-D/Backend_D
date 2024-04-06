@@ -12,4 +12,5 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
     @Query("select c from Coupon c where c.member.id = :memberId and c.endDate >= :endDate")
     List<Coupon> getcoupons(@Param("memberId") Long memberId, @Param("endDate")LocalDate localDate);
 
+    Coupon findByStoreId(Long store_id);
 }

@@ -42,7 +42,10 @@ public class RandomController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new BfResponse<>(GlobalSuccessCode.SUCCESS,
-                        Map.of("content", randomService.getRandomTask(randomRequest))));
+                        Map.of(
+                                "content", randomService.getRandomTask(randomRequest),
+                                "store", randomService.getStore()
+                        )));
     }
 
 }
