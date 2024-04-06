@@ -1,6 +1,7 @@
 package com.kukerton.domain.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Getter
@@ -24,13 +26,10 @@ public class Store {
 
     private String category;  //
 
-    private Double latitude;
-
-    private String longitude;
-
     private Boolean is_opened;
 
-    private Time end_time;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime end_time;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
