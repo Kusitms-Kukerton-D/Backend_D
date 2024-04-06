@@ -1,7 +1,7 @@
 package com.kukerton.service;
 
 
-import com.kukerton.domain.Member;
+import com.kukerton.domain.entity.Member;
 import com.kukerton.domain.repository.MemberRepository;
 import com.kukerton.dto.request.CertificationRequestDto;
 import com.kukerton.dto.response.KakaoAccessToken;
