@@ -30,6 +30,8 @@ public class Certification {
 
     private String review;
 
+    private String subcontent;
+
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate localDate;
 
