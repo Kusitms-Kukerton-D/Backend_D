@@ -1,13 +1,19 @@
 package com.kukerton.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
-public record UnClearCertificationResponseDto(
-    Long certificationId,
-    String taskTitle,
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UnClearCertificationResponseDto {
 
-    String content
-) {
+    private Long certificationId;
+    private String taskTitle;
+    private String content;
+    private String imageUrl;
 
 }
