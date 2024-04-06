@@ -46,7 +46,8 @@ public class CertificationService {
 
             unClearedCertifications.forEach(certification -> {
                 response.add(UnClearCertificationResponseDto.builder()
-                    .taskTitle(certification.getTaskTitle())
+                    .taskTitle(certification.getContent())
+                    .content(certification.getTaskTitle())
                     .certificationId(certification.getId())
                     .build());
             });

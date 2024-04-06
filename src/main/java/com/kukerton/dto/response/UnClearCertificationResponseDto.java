@@ -5,7 +5,9 @@ import lombok.Builder;
 @Builder
 public record UnClearCertificationResponseDto(
     Long certificationId,
-    String taskTitle
+    String taskTitle,
+
+    String content
 ) {
 
 }

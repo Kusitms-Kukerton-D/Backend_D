@@ -26,22 +26,25 @@ public class RandomService {
     private final CouponRepository couponRepository;
     private final CertificationRepository certificationRepository;
     private final MemberRepository memberRepository;
+
     public String getRandomTask(RandomRequest randomRequest) {
 
         String isInterested = randomRequest.getCategory();
 
-        List<Config> configList = configRepository.findAllByIsWant(isInterested.equals("Interested"));
+        List<Config> configList = configRepository.findAllByIsWant(
+            isInterested.equals("Interested"));
         List<Task> taskList = new ArrayList<>();
         configList
-                .forEach(config -> taskList.addAll(taskRepository.findAllByCategory(config.getCategory())));
+            .forEach(
+                config -> taskList.addAll(taskRepository.findAllByCategory(config.getCategory())));
 
         List<Task> newTaskList = taskList.stream()
-                        .filter(task -> task.getHour() <= randomRequest.getHour())
-                        .filter(task -> task.getHour().equals(randomRequest.getHour()) && task.getMinute() <= randomRequest.getMinute())
-                        .toList();
+            .filter(task -> task.getHour() <= randomRequest.getHour())
+            .filter(task -> task.getHour().equals(randomRequest.getHour())
+                && task.getMinute() <= randomRequest.getMinute())
+            .toList();
 
-
-        if(newTaskList.isEmpty()){
+        if (newTaskList.isEmpty()) {
             return null;
         }
 
@@ -52,9 +55,10 @@ public class RandomService {
         Task result = newTaskList.get(rnd.nextInt(newTaskList.size()));
 
         certificationRepository.save(
-                Certification.builder()
-                        .taskTitle(result.getTitle())
-                        .member(memberRepository.findById(randomRequest.getUser_id()).orElse(null))
+            Certification.builder()
+                .taskTitle(result.getContent())
+                .content(result.getTitle())
+                .member(memberRepository.findById(randomRequest.getUser_id()).orElse(null))
                 .build());
 
         return result.getContent();
@@ -64,13 +68,14 @@ public class RandomService {
         List<Store> storeList = storeRepository.findAll();
 
         return storeList.stream()
-                        .map(store -> StoreResponse.builder()
-                        .store_name(store.getName())
-                        .category(store.getCategory())
-                        .is_opened(store.getIs_opened())
-                        .end_time(store.getEnd_time())
-                        .discount(couponRepository.findByStoreId(store.getId())==null ? null : couponRepository.findByStoreId(store.getId()).getPrice())
-                                .build()).toList();
+            .map(store -> StoreResponse.builder()
+                .store_name(store.getName())
+                .category(store.getCategory())
+                .is_opened(store.getIs_opened())
+                .end_time(store.getEnd_time())
+                .discount(couponRepository.findByStoreId(store.getId()) == null ? null
+                    : couponRepository.findByStoreId(store.getId()).getPrice())
+                .build()).toList();
 
     }
 }
