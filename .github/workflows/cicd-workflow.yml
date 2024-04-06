@@ -30,6 +30,15 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
+
+            # Github Secret to .env
+      - name: Create .env file
+        run: |
+            echo MYSQL_HOST=${{ secrets.MYSQL_HOST }} >> .env
+            echo MYSQL_PORT=${{ secrets.MYSQL_PORT }} >> .env
+            echo MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} >> .env
+            echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> .env
+            echo MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} >> .env
       # gradle 설정
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3.1.0
