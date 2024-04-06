@@ -16,4 +16,5 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
     @Query("select count(c) from Coupon c where c.member.id = :memberId")
     Integer getCouponCount(@Param("memberId") Long memberId);
 
+    Coupon findByStoreId(Long store_id);
 }
