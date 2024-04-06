@@ -28,7 +28,7 @@ public class MemberService {
 
 
     private final String clientId = "5cd984f686b2785bcc5e6f25ecbbc27d";
-    private final String redirectUrl = "http://3.39.118.1:8080/member/login";
+    private final String redirectUrl = "http://localhost:5173/auth";
     private final String clientSecret = "OswNgBtjAgVLXQbc92J1syZvXVWKizr8";
     private final String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
