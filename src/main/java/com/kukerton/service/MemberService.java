@@ -1,9 +1,11 @@
 package com.kukerton.service;
 
 
-
+import com.kukerton.domain.entity.Certification;
 import com.kukerton.domain.entity.Coupon;
+import com.kukerton.domain.repository.CertificationRepository;
 import com.kukerton.domain.repository.CouponRepository;
+import com.kukerton.dto.response.CertificationDto;
 import com.kukerton.dto.response.CouponResponseDto;
 import com.kukerton.domain.entity.Config;
 import com.kukerton.domain.entity.Member;
@@ -13,6 +15,7 @@ import com.kukerton.dto.request.CertificationRequestDto;
 import com.kukerton.dto.request.OnboardingRequest;
 import com.kukerton.dto.response.KakaoAccessToken;
 import com.kukerton.dto.response.KakaoUserInfo;
+import com.kukerton.dto.response.MemberResponseDto;
 import com.kukerton.global.enums.Category;
 import com.kukerton.global.enums.MemberErrorCode;
 import com.kukerton.global.exception.MemberException;
@@ -42,6 +45,8 @@ public class MemberService {
     private final ImageService imageService;
 
     private final CouponRepository couponRepository;
+
+    private final CertificationRepository certificationRepository;
 
 
     private final String clientId = "5cd984f686b2785bcc5e6f25ecbbc27d";
@@ -138,7 +143,7 @@ public class MemberService {
 
         List<Coupon> getcoupons = couponRepository.getcoupons(memberId, LocalDate.now());
 
-        if(!getcoupons.isEmpty()){
+        if (!getcoupons.isEmpty()) {
             getcoupons.forEach(coupon -> {
                 response.add(CouponResponseDto.fromEntity(coupon));
             });
@@ -146,27 +151,63 @@ public class MemberService {
         return response;
     }
 
-
+    @Transactional
     public void createOnboardingConfig(OnboardingRequest onboardingRequest) {
 
         Optional<Member> member = memberRepository.findById(onboardingRequest.getUser_id());
 
-        for(String category : onboardingRequest.getInterested_categories()){
+        for (String category : onboardingRequest.getInterested_categories()) {
             configRepository.save(Config.builder()
-                    .category(Category.fromRequest(category).getCategory())
-                    .is_want(true)
-                    .member(member.orElse(null))
-                    .build()
+                .category(Category.fromRequest(category).getCategory())
+                .is_want(true)
+                .member(member.orElse(null))
+                .build()
             );
         }
 
-        for(String category : onboardingRequest.getRestrained_categories()){
+        for (String category : onboardingRequest.getRestrained_categories()) {
             configRepository.save(Config.builder()
-                    .category(Category.fromRequest(category).getCategory())
-                    .is_want(false)
-                    .member(member.orElse(null))
-                    .build()
+                .category(Category.fromRequest(category).getCategory())
+                .is_want(false)
+                .member(member.orElse(null))
+                .build()
             );
         }
+    }
+
+    @Transactional(readOnly = true)
+    public MemberResponseDto getProfile(Long memberId) {
+
+        int certificateCount = 0; // 인증한 갯수
+        List<CertificationDto> certificationDtos = new ArrayList<>();
+
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND)); // 회원 조회
+
+        Integer couponCount = couponRepository.getCouponCount(memberId); // 쿠폰 갯수 조회
+
+        List<Certification> certifications = certificationRepository.findAllByMemberId(memberId);
+
+        certifications.forEach(certification -> {
+            if (certification.getIs_cleared()) {
+                certificationDtos.add(CertificationDto.builder()
+                    .certificationId(certification.getId())
+                    .imageUrl(certification.getImg_url()).build());
+            }});
+
+        long count = certifications.stream()
+            .filter(Certification::getIs_cleared)
+            .count();
+
+        return MemberResponseDto.builder()
+            .name(member.getNickname())
+            .level(member.getLevel())
+            .randomCount(certifications.size())
+            .coupon(couponCount)
+            .certificateCount(count)
+            .certificationDtos(certificationDtos)
+            .build();
+
+
     }
 }

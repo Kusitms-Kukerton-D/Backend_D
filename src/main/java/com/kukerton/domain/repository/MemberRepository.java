@@ -15,4 +15,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("select c from Certification c where c.member.id = :memberId and c.is_cleared = false")
     List<Certification> getUnClearedCertification(@Param("memberId") Long memberId);
 
+
 }
