@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RandomRequest {
+    @NotNull(message = "user id 항목은 필수입니다.")
+    private Long user_id;
 
     @NotNull(message = "분야선택 항목은 필수입니다.")
     private String category;
