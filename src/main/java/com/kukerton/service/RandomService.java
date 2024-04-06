@@ -8,7 +8,6 @@ import com.kukerton.dto.request.RandomRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,27 +24,24 @@ public class RandomService {
         String isInterested = randomRequest.getCategory();
 
         List<Config> configList = configRepository.findAllByIsWant(isInterested.equals("Interested"));
-
         List<Task> taskList = new ArrayList<>();
         configList
                 .forEach(config -> taskList.addAll(taskRepository.findAllByCategory(config.getCategory())));
 
-        taskList
-                .forEach(task -> {
-                    if(task.getHour() > randomRequest.getHour()){
-                        taskList.remove(task);
-                    }
-                    else if(task.getHour().equals(randomRequest.getHour())){
-                        if(task.getMinute() > randomRequest.getMinute()){
-                            taskList.remove(task);
-                        }
-                    }
-                });
+        List<Task> newTaskList = taskList.stream()
+                        .filter(task -> task.getHour() <= randomRequest.getHour())
+                        .filter(task -> task.getHour().equals(randomRequest.getHour()) && task.getMinute() <= randomRequest.getMinute())
+                        .toList();
 
-        System.out.println(taskList.size());
+
+        if(newTaskList.isEmpty()){
+            return null;
+        }
+
+        //System.out.println(newTaskList.size());
         Random rnd = new Random();
         rnd.setSeed(System.currentTimeMillis());
-        return taskList.get(rnd.nextInt(taskList.size())).getContent();
+        return newTaskList.get(rnd.nextInt(newTaskList.size())).getContent();
 
     }
 }
