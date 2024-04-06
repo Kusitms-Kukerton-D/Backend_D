@@ -32,12 +32,4 @@ public class Member {
 
     private Timestamp end_time;
 
-    @OneToMany(mappedBy = "certification", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Certification> certifications = new ArrayList<>();
-
-    @OneToMany(mappedBy = "config", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Config> configs = new ArrayList<>();
-
-    @OneToMany(mappedBy = "coupon", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Coupon> coupons = new ArrayList<>();
 }

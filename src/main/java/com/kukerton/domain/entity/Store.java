@@ -32,11 +32,8 @@ public class Store {
 
     private Time end_time;
 
-    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Store> stores = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "task_id")
     private Task task;
 
 }

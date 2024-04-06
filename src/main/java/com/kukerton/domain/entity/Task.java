@@ -23,6 +23,4 @@ public class Task {
 
     private String  category;
 
-    @OneToMany(mappedBy = "task", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Task> tasks = new ArrayList<>();
 }
