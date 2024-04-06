@@ -1,12 +1,10 @@
 package com.kukerton.service;
 
+import com.kukerton.domain.entity.Certification;
 import com.kukerton.domain.entity.Config;
 import com.kukerton.domain.entity.Store;
 import com.kukerton.domain.entity.Task;
-import com.kukerton.domain.repository.ConfigRepository;
-import com.kukerton.domain.repository.CouponRepository;
-import com.kukerton.domain.repository.StoreRepository;
-import com.kukerton.domain.repository.TaskRepository;
+import com.kukerton.domain.repository.*;
 import com.kukerton.dto.request.RandomRequest;
 import com.kukerton.global.response.StoreResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +24,8 @@ public class RandomService {
     private final TaskRepository taskRepository;
     private final StoreRepository storeRepository;
     private final CouponRepository couponRepository;
+    private final CertificationRepository certificationRepository;
+    private final MemberRepository memberRepository;
     public String getRandomTask(RandomRequest randomRequest) {
 
         String isInterested = randomRequest.getCategory();
@@ -48,8 +48,16 @@ public class RandomService {
         //System.out.println(newTaskList.size());
         Random rnd = new Random();
         rnd.setSeed(System.currentTimeMillis());
-        return newTaskList.get(rnd.nextInt(newTaskList.size())).getContent();
 
+        Task result = newTaskList.get(rnd.nextInt(newTaskList.size()));
+
+        certificationRepository.save(
+                Certification.builder()
+                        .taskTitle(result.getTitle())
+                        .member(memberRepository.findById(randomRequest.getUser_id()).orElse(null))
+                .build());
+
+        return result.getContent();
     }
 
     public List<StoreResponse> getStore() {
