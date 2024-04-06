@@ -1,5 +1,6 @@
-package com.kukerton.global;
+package com.kukerton.controller;
 
+import com.kukerton.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

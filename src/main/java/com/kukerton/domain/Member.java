@@ -1,4 +1,4 @@
-package com.kukerton.global;
+package com.kukerton.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
